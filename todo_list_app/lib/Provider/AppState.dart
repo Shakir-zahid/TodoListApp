@@ -8,9 +8,6 @@ class AppState with ChangeNotifier{
   Box<Todo> box;
   Todo todo;
 
-init(){
-box =  Hive.box<Todo>(appBoxName);
-}
  
 
   void getTodoList() async {
@@ -26,7 +23,7 @@ box =  Hive.box<Todo>(appBoxName);
     notifyListeners();
   }
 
-    void deleteContact(key) async {
+    void deleteTodo(key) async {
     var box = await Hive.openBox<Todo>(appBoxName);
     await box.deleteAt(key);
     todoList = box.values.toList();
@@ -34,25 +31,15 @@ box =  Hive.box<Todo>(appBoxName);
     notifyListeners();
   }
 
-   Todo getContact(index) {
-    return todoList[index];
-  }
-
-   void setActiveContact(key) async {
-    var box = await Hive.openBox<Todo>(appBoxName);
-    todo = box.get(key);
-    notifyListeners();
-  }
 
   int get todoListCount {
     return todoList.length;
   }
 
-    void editContact({Todo todo, int contactKey}) async {
+    void editTodo({Todo todo, int contactKey}) async {
     var box = await Hive.openBox<Todo>(appBoxName);
     await box.putAt(contactKey, todo);
     todoList = box.values.toList();
-    // todo = box.get(contactKey);
     print('New Name Of Contact: ' + todo.title);
     notifyListeners();
   }

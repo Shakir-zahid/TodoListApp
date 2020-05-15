@@ -9,7 +9,7 @@ Widget displayAddButton(String tag,BuildContext context) {
     heroTag: tag,
     backgroundColor: AppColors.yellowColor,
     mini: false,
-    onPressed: ()=>displayAddTodoDialogue(context),
+    onPressed: ()=>displayAddTodoDialogue(context,false),
     
     child: Icon(Icons.add,color: AppColors.blackTextColor,size: 50,),
   );

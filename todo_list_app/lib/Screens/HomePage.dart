@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:hive/hive.dart';
 import 'package:provider/provider.dart';
-import 'package:todo_list_app/Model/Todo.dart';
 import 'package:todo_list_app/Provider/AppState.dart';
 import 'package:todo_list_app/Utils/AppColors.dart';
-import 'package:todo_list_app/Utils/AppConst.dart';
 import 'package:todo_list_app/Utils/AppStyle.dart';
 import 'package:todo_list_app/Widgets/appBar.dart';
 import 'package:todo_list_app/Widgets/dialogues.dart';
@@ -18,17 +15,16 @@ class HomePage extends StatelessWidget {
         itemBuilder: (BuildContext context, index) {
           return ListTile(
             onTap: () {
-              displayEditTodoDialogue(
-                context,
-                index,
-                title: appState.todoList[index].title,
-                description: appState.todoList[index].description,
-              ); // appState.deleteContact(index);
+              displayAddTodoDialogue(context, true,
+              title:appState.todoList[index].title,
+              description: appState.todoList[index].description,
+              index: index,
+               );   
             },
             leading: Container(
                 child: FadeInImage(
               fit: BoxFit.cover,
-              placeholder: AssetImage('assetName'),
+              placeholder: AssetImage('assets/802.gif'),
               image: NetworkImage(appState.todoList[index].imageUrl),
             )),
             title: Text(
@@ -38,6 +34,8 @@ class HomePage extends StatelessWidget {
             subtitle: Text(
               appState.todoList[index].description,
               style: TextStyles.textFieldFontText,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
             ),
             trailing: IconButton(
                 icon: Icon(
@@ -45,10 +43,10 @@ class HomePage extends StatelessWidget {
                   size: 40,
                   color: AppColors.redColor,
                 ),
-                onPressed: () => appState.deleteContact(index)),
+                onPressed: () => appState.deleteTodo(index)),
           );
         },
-        separatorBuilder: (_, index) => Divider(),
+        separatorBuilder: (_, index) => Divider(color: AppColors.blackTextColor,),
       );
     });
   }
